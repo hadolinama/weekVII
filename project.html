@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"
+    <title> Train Schedule project</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+
+</head>
+  <body>
+  <div class="container">    
+<div class="jumbotron jumbotron-fluid alert-success">
+  <div class="container">
+    <h2 class="display-3">Any Time is Train Time</h2>
+    <p class="lead">Choo Choo Chee Chee</p>
+  </div>
+</div>
+  
+<div class="schedule_container">
+  <div class="alert alert-primary" role="alert"><h4>Current Train Schedule</h4></div>
+
+<div class="travel_information">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Train Name</th>
+      <th>Destination</th>
+      <th>Frequency (mins)</th>
+      <th>Next Arrival</th>
+      <th>Mins Away</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+
+  </tbody>
+
+</table>
+</div>
+
+  <div class="card">
+   <h4 class="card-header alert-primary" role="alert">Add Train</h4>
+  <div class="card-body">
+    
+  <div class="form">
+    <form>
+        <div class="form-group">
+      <label for="Train-Name">Train Name</label>
+      <input type="text" class="form-control" id="trainName">
+      </div>
+
+       <div class="form-group">
+      <label for="Destination">Destination</label>
+      <input type="text" class="form-control" id="trainDestination">
+      </div>
+
+       <div class="form-group">
+      <label for="Train-Time">First Train Time (HH:mm - military time)</label>
+      <input type="text" class="form-control" id="trainTime">
+      </div>
+
+       <div class="form-group">
+      <label for="Frequency">Frequency</label>
+      <input type="text" class="form-control" id="trainFrequency">
+      </div>
+
+
+
+
+
+    </form> 
+    </div>
+  </div>
+</div>
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDqR2LYhWs9jCX4tlCkusXRmMAKKF3pJq8",
+    authDomain: "train-project-a7285.firebaseapp.com",
+    databaseURL: "https://train-project-a7285.firebaseio.com",
+    projectId: "train-project-a7285",
+    storageBucket: "",
+    messagingSenderId: "601442932507"
+  };
+  firebase.initializeApp(config);
+
+var trainInfo = firebase.database();
+
+
+
+var train_name = "trainName";
+var Destination = "trainDestination";
+var Traintime = "trainTime";
+var Frequency = "trainFrequency";
+
+$("#addTrainBtn").on("click", function(event) {
+  event.preventDefault();
+
+train_name = $("#trainName-input").val().trim();
+Destination = $("#trainDestination-input").val().trim();
+Traintime = $("#trainTime-input").val().trim();
+Frequency = $("#trainFrequency-input").val().trim();
+
+trainInfo.ref().push({
+
+name: train_name,
+journey: Destination,
+time: trainTime,
+occurrence: Frequency,
+
+}); 
+}
+ 
+ trainInfo.ref().on("child_added", function(childSnapshot) {
+
+   console.log(childSnapshot.val().train_name);
+   console.log(childSnapshot.val().Destination);
+   console.log(childSnapshot.val().trainTime);
+   console.log(childSnapshot.val().Frequency);
+
+ }
+ )
+
+
+
+
+</script>
+  </body>  
+
+</html>
